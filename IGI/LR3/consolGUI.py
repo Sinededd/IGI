@@ -55,6 +55,9 @@ else:
         try:
             tty.setraw(fd)
             ch = sys.stdin.read(1)
+            # print(repr(ch))
+            if ch == "\x7f":
+                return "backspace"
             if ch == "\x1b":
                 ch2 = sys.stdin.read(1)
                 ch3 = sys.stdin.read(1)

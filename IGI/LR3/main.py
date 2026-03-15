@@ -103,18 +103,19 @@ def render_task_menu(selected: int, **params) -> None:
 
     clear()
     print_header()
-    print(f"  {C.DIM}↑ ↓  navigate    enter  confirm{C.RESET}")
+    print(f"  {C.DIM}↑ ↓  navigate    enter  confirm/edit{C.RESET}")
     print()
 
     maxLength = len(max(params, key=len))
 
     for i, item in enumerate(params):
+        itemText = f"{item.ljust(maxLength)} : {params[item]}  ({type(params[item])})"
         if i == selected:
             marker = f"{C.CYAN}›{C.RESET}"
-            text   = f"{C.WHITE}{C.BOLD}{item.ljust(maxLength)} : {params[item]}{C.RESET}"
+            text   = f"{C.WHITE}{C.BOLD}{itemText}{C.RESET}"
         else:
             marker = " "
-            text   = f"{C.DIM}{item.ljust(maxLength)} : {params[item]}{C.RESET}"
+            text   = f"{C.DIM}{itemText}{C.RESET}"
         print(f"  {marker}  {text}")
 
     if len(params) == selected:
@@ -132,19 +133,29 @@ def task_menu(**params) -> dict:
 
     selected = 0
     total    = len(params) + 1
+    keys = list(params.keys())
+
 
     while True:
         render_task_menu(selected, **params)
         key = getch()
 
-
         if key == "up":
             selected = (selected - 1) % total
         elif key == "down":
             selected = (selected + 1) % total
-        elif key == "enter" and selected == total - 1:
-            return selected
-
+        elif key == "enter":
+            if selected == total - 1:
+                return params
+            else:
+                current_key = keys[selected]
+                maxLength = len(max(params, key=len))
+                new_value = input(f"\033[{total - selected + 1}A\033[G\033[{maxLength + 8}C\033[K")
+                target_type = type(params[current_key])
+                try:
+                    params[current_key] = target_type(new_value)
+                except ValueError:
+                    pass
 
 
 # ─────────────────────────────────────────────
