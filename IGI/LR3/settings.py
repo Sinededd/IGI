@@ -8,7 +8,7 @@ DEV_DATE = "2026-03-16"
 
 MENU_ITEMS = [
     "Task 1  —  arccos",
-    "Task 2  —  <your title>",
+    "Task 2  —  arithmetic mean of even",
     "Task 3  —  <your title>",
     "Task 4  —  <your title>",
     "Task 5  —  <your title>",

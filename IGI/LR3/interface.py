@@ -109,7 +109,7 @@ def render_task_menu(selected: int, render_header, **params) -> None:
     max_length = len(max(params, key=len))
 
     for i, item in enumerate(params):
-        item_text = f"{item.ljust(max_length)} : {params[item]}"
+        item_text = f"{item.ljust(max_length)} : {params[item]}  ({type(params[item])})"
         if i == selected:
             marker = f"{C.CYAN}›{C.RESET}"
             text   = f"{C.WHITE}{C.BOLD}{item_text}{C.RESET}"
@@ -128,13 +128,21 @@ def render_task_menu(selected: int, render_header, **params) -> None:
 
     print()
 
+def convert_types(value, type_constructor):
+    """Function to convert types of object."""
+    # print("custom converter")
+    try:
+        return type_constructor(value)
+    except ValueError:
+        return None
 
-def task_menu(render_header, **params : Any) -> dict:
+def task_menu(render_header, convert_handler = None, **params : Any) -> dict:
     """
     Controller for the task menu.
 
     Args:
         render_header (function): A function to render the menu header.
+        convert_handler (function, optional): A function to convert handler type to value.)
         params (dict): Dictionary for displaying menu items.
     """
     selected = 0
@@ -158,10 +166,10 @@ def task_menu(render_header, **params : Any) -> dict:
                 max_length = len(max(params, key=len))
                 new_value = input(f"\033[{total - selected + 1}A\033[G\033[{max_length + 8}C\033[K")
                 target_type = type(params[current_key])
-                try:
-                    params[current_key] = target_type(new_value)
-                except ValueError:
-                    pass
+
+                converted_value = convert_types(new_value, target_type if convert_handler is None else convert_handler)
+                if converted_value is not None:
+                    params[current_key] = converted_value
 
 
 

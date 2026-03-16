@@ -1,4 +1,6 @@
 import math
+
+
 from settings import C
 
 def calculate_arccos(x: float, epsilon: float):
@@ -27,6 +29,18 @@ def calculate_arccos(x: float, epsilon: float):
     result = (math.pi / 2) - sum_series
 
 
-    print(f"  {C.DIM}Iterations:     {n}{C.RESET}")
-    print(f"  {C.DIM}Series sum:     {result:.10f}{C.RESET}")
-    print(f"  {C.DIM}Function value: {math.acos(x):.10f}{C.RESET}")
+    print(f"  {C.WHITE}Iterations:     {n}{C.RESET}")
+    print(f"  {C.WHITE}Series sum:     {result:.10f}{C.RESET}")
+    print(f"  {C.WHITE}Function value: {math.acos(x):.10f}{C.RESET}")
+
+
+
+def calculate_sum_even(array: list):
+    even_numbers = list(filter(lambda x: x % 2 == 0, array))
+    if len(even_numbers) == 0:
+        print(f"  {C.RED}No even numbers{C.RESET}")
+        return
+    print(f"  {C.WHITE}Arithmetic mean of even:  {sum(even_numbers) / len(even_numbers)}{C.RESET}")
+
+
+

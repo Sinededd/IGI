@@ -6,16 +6,26 @@ def run_task_1() -> None:
     """Task 1 entry point."""
 
     render_header = lambda: task_header(1, "Arccos", "Calculate series sum for arccos.")
-    current_params = task_menu(render_header, x=0.5, epsilon=0.01)
+    current_params = task_menu(render_header, None, x=0.5, epsilon=0.01)
     tasks.calculate_arccos(**current_params)
     pause()
 
 
 def run_task_2() -> None:
     """Task 2 entry point."""
-    clear()
-    task_header(3, "Your Task Title")
-    print(f"  {C.GREEN}✓{C.RESET}  task 2 is running …")
+    render_header = lambda: task_header(1, "Arithmetic mean of even", "Calculate the arithmetic mean of even numbers.")
+
+    def check_int_array(string: str):
+        """Function to check if string is an integer."""
+        array_string = string.strip().split()
+        if not array_string:
+            return None
+        int_list = list(map(int, array_string))
+        return int_list
+
+    current_params = task_menu(render_header, check_int_array, array=[2, 5, -1, 4])
+    tasks.calculate_sum_even(**current_params)
+    # print(current_params)
     pause()
 
 
