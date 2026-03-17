@@ -109,7 +109,8 @@ def render_task_menu(selected: int, render_header, **params) -> None:
     max_length = len(max(params, key=len))
 
     for i, item in enumerate(params):
-        item_text = f"{item.ljust(max_length)} : {params[item]}  ({type(params[item])})"
+        # item_text = f"{item.ljust(max_length)} : {params[item]}  ({type(params[item])})"
+        item_text = f"{item.ljust(max_length)} : {params[item]}"
         if i == selected:
             marker = f"{C.CYAN}›{C.RESET}"
             text   = f"{C.WHITE}{C.BOLD}{item_text}{C.RESET}"
@@ -164,7 +165,10 @@ def task_menu(render_header, convert_handler = None, **params : Any) -> dict:
             else:
                 current_key = keys[selected]
                 max_length = len(max(params, key=len))
-                new_value = input(f"\033[{total - selected + 1}A\033[G\033[{max_length + 8}C\033[K")
+                cleaned_params = dict(params)
+                cleaned_params[current_key] = ""
+                render_task_menu(selected, render_header, **cleaned_params)
+                new_value = input(f"\033[{total - selected + 1}A\033[G\033[{max_length + 8}C")
                 target_type = type(params[current_key])
 
                 converted_value = convert_types(new_value, target_type if convert_handler is None else convert_handler)

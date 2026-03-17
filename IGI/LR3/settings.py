@@ -9,9 +9,9 @@ DEV_DATE = "2026-03-16"
 MENU_ITEMS = [
     "Task 1  —  arccos",
     "Task 2  —  arithmetic mean of even",
-    "Task 3  —  <your title>",
-    "Task 4  —  <your title>",
-    "Task 5  —  <your title>",
+    "Task 3  —  spaces and punctuation marks",
+    "Task 4  —  Analyzes text",
+    "Task 5  —  Prod neg and sum pos",
     "Exit",
 ]
 

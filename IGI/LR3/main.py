@@ -13,7 +13,7 @@ def run_task_1() -> None:
 
 def run_task_2() -> None:
     """Task 2 entry point."""
-    render_header = lambda: task_header(1, "Arithmetic mean of even", "Calculate the arithmetic mean of even numbers.")
+    render_header = lambda: task_header(2, "Arithmetic mean of even", "Calculate the arithmetic mean of even numbers.")
 
     def check_int_array(string: str):
         """Function to check if string is an integer."""
@@ -25,38 +25,54 @@ def run_task_2() -> None:
 
     current_params = task_menu(render_header, check_int_array, array=[2, 5, -1, 4])
     tasks.calculate_sum_even(**current_params)
-    # print(current_params)
     pause()
 
 
 
 def run_task_3() -> None:
     """Task 3 entry point."""
-    clear()
-    task_header(3, "Your Task Title")
-    print(f"  {C.GREEN}✓{C.RESET}  task 3 is running …")
+    render_header = lambda: task_header(3, "Spaces and punctuation marks", "Counts the number of spaces and punctuation marks.")
+    current_params = task_menu(render_header, None, string="Тестовый текст, который нужен для проверки кода")
+    tasks.count_spaces_and_punctuation(**current_params)
     pause()
 
 
 def run_task_4() -> None:
     """Task 4 entry point."""
-    clear()
-    task_header(4, "Your Task Title")
-    print(f"  {C.GREEN}✓{C.RESET}  task 4 is running …")
+    render_header = lambda: task_header(4, "Analyzes text",
+                                        "Analyzes text according to three parameters:\n"
+                                        "a) number of words starting or ending with a vowel.\n"
+                                        "b) frequency of each character.\n"
+                                        "c) alphabetical output of words that come after commas.\n")
+    current_params = task_menu(render_header, None, text="So she was "
+                                                           "considering in her own mind, as "
+                                                           "well as she could, for the hot day "
+                                                           "made her feel very sleepy and stupid, "
+                                                           "whether the pleasure of making a daisy-chain "
+                                                           "would be worth the trouble of getting "
+                                                           "up and picking the daisies, when "
+                                                           "suddenly a White Rabbit with pink "
+                                                           "eyes ran close by her.")
+    tasks.analyze_text(**current_params)
     pause()
 
 
 def run_task_5() -> None:
     """Task 5 entry point."""
-    clear()
-    task_header(5, "Your Task Title")
-    print(f"  {C.GREEN}✓{C.RESET}  task 5 is running …")
+    render_header = lambda: task_header(5, "Prod neg and sum pos", "Find product of negative numbers and sum of positive numbers up to the maximum number")
+
+    def check_float_array(string: str):
+        """Function to check if string is a float."""
+        array_string = string.strip().split()
+        if not array_string:
+            return None
+        int_list = list(map(float, array_string))
+        return int_list
+
+    current_params = task_menu(render_header, check_float_array, array=[2.6, 5.3, -1.9, 4.1])
+    tasks.float_list_analyze(**current_params)
     pause()
 
-
-# ─────────────────────────────────────────────
-#  ROUTING TABLE
-# ─────────────────────────────────────────────
 
 TASK_RUNNERS = {
     0: run_task_1,
@@ -66,10 +82,6 @@ TASK_RUNNERS = {
     4: run_task_5,
 }
 
-
-# ─────────────────────────────────────────────
-#  ENTRY POINT
-# ─────────────────────────────────────────────
 
 def main() -> None:
     """Application entry point."""
