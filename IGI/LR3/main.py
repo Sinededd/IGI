@@ -1,3 +1,15 @@
+"""
+Short description: This program is a collection of interactive business functions
+designed to demonstrate Python's core capabilities, including standard data types,
+collections, text analysis.
+
+Laboratory work №: 3
+Version: 1.0
+Developer: Grishko Denis
+Date: 2026-03-16
+"""
+from random import Random
+
 from interface import *
 import tasks
 
@@ -23,7 +35,8 @@ def run_task_2() -> None:
         int_list = list(map(int, array_string))
         return int_list
 
-    current_params = task_menu(render_header, check_int_array, array=[2, 5, -1, 4])
+    current_params = task_menu(render_header, check_int_array, array=[2, 5, -1, 4], Random=4)
+    del current_params['Random']
     tasks.calculate_sum_even(**current_params)
     pause()
 

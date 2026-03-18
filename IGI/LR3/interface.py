@@ -1,7 +1,7 @@
 import os
 import sys
 from typing import Any
-
+from utils import random_int_generator
 from settings import *
 
 
@@ -143,7 +143,7 @@ def task_menu(render_header, convert_handler = None, **params : Any) -> dict:
 
     Args:
         render_header (function): A function to render the menu header.
-        convert_handler (function, optional): A function to convert handler type to value.)
+        convert_handler (function, optional): A function to convert handler type to value.
         params (dict): Dictionary for displaying menu items.
     """
     selected = 0
@@ -164,6 +164,8 @@ def task_menu(render_header, convert_handler = None, **params : Any) -> dict:
                 return params
             else:
                 current_key = keys[selected]
+
+
                 max_length = len(max(params, key=len))
                 cleaned_params = dict(params)
                 cleaned_params[current_key] = ""
@@ -171,9 +173,17 @@ def task_menu(render_header, convert_handler = None, **params : Any) -> dict:
                 new_value = input(f"\033[{total - selected + 1}A\033[G\033[{max_length + 8}C")
                 target_type = type(params[current_key])
 
-                converted_value = convert_types(new_value, target_type if convert_handler is None else convert_handler)
+                converted_value = convert_types(new_value, target_type if convert_handler is None or current_key == "Random" else convert_handler)
+                if converted_value is not None and current_key == "Random" and converted_value <= 0:
+                    continue
                 if converted_value is not None:
                     params[current_key] = converted_value
+
+                # print(params[current_key])
+                # print(type(params[current_key]))
+                # pause()
+                if current_key == "Random":
+                    params[keys[selected - 1]] = list(random_int_generator(params[current_key]))
 
 
 

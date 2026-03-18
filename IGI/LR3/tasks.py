@@ -1,8 +1,9 @@
 import math
-from itertools import product
-
+import utils
 from settings import C
 
+
+@utils.timer
 def calculate_arccos(x: float, epsilon: float):
     """Calculate the arccos of the given point"""
 
@@ -10,7 +11,7 @@ def calculate_arccos(x: float, epsilon: float):
         print(f"  {C.RED}x must be between -1 and 1{C.RESET}")
         return
 
-    max_iterations = 500
+    max_iterations = 100000
     sum_series= x
     current_term = x
     n = 0
@@ -72,7 +73,8 @@ def analyze_text(text: str):
     words = temp_text.split()
     vowel_words_count = 0
     for word in words:
-        if word and (word[0] in vowels or word[-1] in vowels):
+        clean_word = word.strip('.,!?;:-"\'«»—…')
+        if clean_word and (clean_word[0] in vowels or clean_word[-1] in vowels):
             vowel_words_count += 1
 
 
